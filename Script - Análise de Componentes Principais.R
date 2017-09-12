@@ -1,18 +1,18 @@
 ##############################################################################################################
 ##                                                                                                          ##
-##                   Analise Multivariada: Uma abordagem aplicada utilizando o software R                   ## 
+##                   An√°lise Multivariada: Uma abordagem aplicada utilizando o software R                   ## 
 ##                                                                                                          ##
-##                                    Analise de Componentes Principais                                     ##
+##                                    An√°lise de Componentes Principais                                     ##
 ##                                                                                                          ##
 ##############################################################################################################
 
-##Obs: Cada ObservaÁ„o se refere a um prato avaliado em um festival gastronÙmico 
+##Obs: Cada Observa√ß√£o se refere a um prato avaliado em um festival gastron√¥mico 
 
 ## Carregando o arquivo de dados
 (pratos=read.table("PratosSB.txt", header=TRUE,row.names = 1))
 (X = as.matrix(pratos))
 
-## An·lise exploratÛria
+## An√°lise explorat√≥ria
 summary(X)
 windows()
 boxplot(X)
@@ -22,13 +22,13 @@ windows()
 plot(pratos)
 scatterplotMatrix(X,diagonal = 'none')
 cor(cbind(pratos))
-## Podemos observar a presenÁa de correlaÁ„o e heterogeneidade de vari‚ncias: a an·lise deve ser feita 
-## com matriz de correlaÁıes
+## Podemos observar a presen√ßa de correla√ß√£o e heterogeneidade de vari√¢ncias: a an√°lise deve ser feita 
+## com matriz de correla√ß√µes
 
 
 ## Teste de espericidade de Bartlett
-## H0: R = I (N„o existe correlaÁ„o suficiente para aplicaÁ„o da tÈcnica multivariada)
-## Ha: R <> I (Existe correlaÁ„o suficiente para aplicaÁ„o da tÈcnica multivariada)
+## H0: R = I (N√£o existe correla√ß√£o suficiente para aplica√ß√£o da t√©cnica multivariada)
+## Ha: R <> I (Existe correla√ß√£o suficiente para aplica√ß√£o da t√©cnica multivariada)
 library(psych)
 n = dim(X)[1]
 R = cor(X)
@@ -36,20 +36,20 @@ cortest.bartlett(R,n)
 ## significativo (p-valor ~= 0). Rejeita-se H0
 
 
-## An·lise de Componentes Principais utilizando a matriz de correlaÁıes (Mais aconselh·vel, neste caso)
+## An√°lise de Componentes Principais utilizando a matriz de correla√ß√µes (Mais aconselh√°vel, neste caso)
 acp_R = princomp(X,cor = T)
 
 ## Verificando a quantidade de componentes que se deve reter na analise
-## Gr·fico screeplot 
+## Gr√°fico screeplot 
 screeplot(acp_R, type="l")
 abline(h=1,col="red")
-## critÈrio de Kaiser 
+## crit√©rio de Kaiser 
 (k = sum(eigen(R)$values>1))
-## Pelo gr·fico screeplot e pelo critÈrio de Kaiser devemos reter apenas uma componente.
+## Pelo gr√°fico screeplot e pelo crit√©rio de Kaiser devemos reter apenas uma componente.
 
-## ProporÁ„o da variaÁ„o explicada
+## Propor√ß√£o da varia√ß√£o explicada
 summary(acp_R)
-## VariaÁ„o explicada pela primeira componente 0.7198257
+## Varia√ß√£o explicada pela primeira componente 0.7198257
 
 ## Loadings (cargas)
 loadings(acp_R)
@@ -60,19 +60,19 @@ unclass(loadings(acp_R))
 ## Escores
 (escores = acp_R$scores)
 
-## Matriz de correlaÁıes  entre vari·veis originais e componentes principais
+## Matriz de correla√ß√µes  entre vari√°veis originais e componentes principais
 (Cor_vo_cp = cor(X, escores))
 
-## Gr·fico biplot
+## Gr√°fico biplot
 biplot(acp_R, xlim=c(-0.5,1), xlab="Comp.1(71,98%Var.Expl.)", ylab="Comp.2(14,63%Var.Expl.)")
 
-## Conclus„o Final: A primeira componente principal explica aproximadamente 72% da variaÁ„o total e de acordo com a Matriz  
-## de correlaÁıes entre vari·veis originais e componentes principais os  pesos das vari·veis Sabor, Atendimento, Temperatura,
-## ApresentaÁ„o e Higiene s„o negativamente altos para essa componente, ou seja, quanto maior a nota dessas vari·veis, menor
-## È o escore da primeira componente. Ent„o, a primeira componente principal pode ser entendida como um Ìndice global da 
-## qualidade do prato de acordo com os juÌzes. 
-## Assim, escores mais baixo na primeira componente indica que o Ìndice de qualidade È melhor, ou seja, quanto menor o escore 
-## dessa componente, melhor È o prato. De acordo com a tabela de escores obtida nessa an·lise, os pratos P1, P2, P8 e P10 
-## possuem a melhor qualidade enquanto que o prato de pior qualidade È o P11.
+## Conclus√£o Final: A primeira componente principal explica aproximadamente 72% da varia√ß√£o total e de acordo com a Matriz  
+## de correla√ß√µes entre vari√°veis originais e componentes principais os  pesos das vari√°veis Sabor, Atendimento, Temperatura,
+## Apresenta√ß√£o e Higiene s√£o negativamente altos para essa componente, ou seja, quanto maior a nota dessas vari√°veis, menor
+## √© o escore da primeira componente. Ent√£o, a primeira componente principal pode ser entendida como um √≠ndice global da 
+## qualidade do prato de acordo com os ju√≠zes. 
+## Assim, escores mais baixo na primeira componente indica que o √≠ndice de qualidade √© melhor, ou seja, quanto menor o escore 
+## dessa componente, melhor √© o prato. De acordo com a tabela de escores obtida nessa an√°lise, os pratos P1, P2, P8 e P10 
+## possuem a melhor qualidade enquanto que o prato de pior qualidade √© o P11.
 
 
