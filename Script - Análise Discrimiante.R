@@ -1,13 +1,13 @@
 ##############################################################################################################
 ##                                                                                                          ##
-##                   An·lise Multivariada: Uma abordagem aplicada utilizando o software R                   ## 
+##                   An√°lise Multivariada: Uma abordagem aplicada utilizando o software R                   ## 
 ##                                                                                                          ##
-##                                           An·lise Discriminante                                          ##
+##                                           An√°lise Discriminante                                          ##
 ##                                                                                                          ##
-################################################  LEGENDA ####################################################
+################################################  LEGENDA  ###################################################
 ##                                                                                                          ##
-##  x1: ¡rea                                                                                                ##
-##  x2: PerÌmetro                                                                                           ##
+##  x1: √Årea                                                                                                ##
+##  x2: Per√≠metro                                                                                           ##
 ##  x3: Capacidade                                                                                          ##
 ##  x4: Comprimento do kernel                                                                               ## 
 ##  x5: Largura do kernel                                                                                   ##
@@ -60,7 +60,7 @@ boxM <-function(data, grouping)
 }
 
 
-##################################### FunÁ„o discriminante Linear #########################################
+##################################### Fun√ß√£o discriminante Linear #########################################
 
 ## Primeiramente vamos carregar os pacotes
 library(mda)
@@ -71,23 +71,23 @@ library(klaR)
 ## Leitura do banco de dados 
 dados = read.table("AD_seeds.txt", header=TRUE)
 
-## Uma an·lise descritiva destes dados:
+## Uma an√°lise descritiva destes dados:
 summary(dados)
 
-## Analise descritiva dentro de cada tipo
+## An√°lise descritiva dentro de cada tipo
 by(dados[, -8], dados$x8, summary)
 
-## Gr·fico de dispers„o das vari·veis tomadas duas a duas
+## Gr√°fico de dispers√£o das vari√°veis tomadas duas a duas
 plot(dados[, -8], col = unclass(dados$x8))
 
 ## Boxplots
-boxplot(x1 ~ x8, dados, main = "x1 ~ tipo de gr„o", xlab = 'Tipo de Gr„o', ylab='Area')
-boxplot(x2 ~ x8, dados, main = "x2 ~ tipo de gr„o", xlab = 'Tipo de Gr„o', ylab='Perimetro')
-boxplot(x3 ~ x8, dados, main = "x3 ~ tipo de gr„o", xlab = 'Tipo de Gr„o', ylab='Capacidade')
-boxplot(x4 ~ x8, dados, main = "x4 ~ tipo de gr„o", xlab = 'Tipo de Gr„o', ylab='Comprimento do kernel')
-boxplot(x5 ~ x8, dados, main = "x5 ~ tipo de gr„o", xlab = 'Tipo de Gr„o', ylab='Largura do kernel')
-boxplot(x6 ~ x8, dados, main = "x6 ~ tipo de gr„o", xlab = 'Tipo de Gr„o', ylab='Coeficiente de Assimetria')
-boxplot(x7 ~ x8, dados, main = "x7 ~ tipo de gr„o", xlab = 'Tipo de Gr„o', ylab='Comprimento do sulco do kernel')
+boxplot(x1 ~ x8, dados, main = "x1 ~ tipo de gr√£o", xlab = 'Tipo de Gr√£o', ylab='√Årea')
+boxplot(x2 ~ x8, dados, main = "x2 ~ tipo de gr√£o", xlab = 'Tipo de Gr√£o', ylab='Per√≠metro')
+boxplot(x3 ~ x8, dados, main = "x3 ~ tipo de gr√£o", xlab = 'Tipo de Gr√£o', ylab='Capacidade')
+boxplot(x4 ~ x8, dados, main = "x4 ~ tipo de gr√£o", xlab = 'Tipo de Gr√£o', ylab='Comprimento do kernel')
+boxplot(x5 ~ x8, dados, main = "x5 ~ tipo de gr√£o", xlab = 'Tipo de Gr√£o', ylab='Largura do kernel')
+boxplot(x6 ~ x8, dados, main = "x6 ~ tipo de gr√£o", xlab = 'Tipo de Gr√£o', ylab='Coeficiente de Assimetria')
+boxplot(x7 ~ x8, dados, main = "x7 ~ tipo de gr√£o", xlab = 'Tipo de Gr√£o', ylab='Comprimento do sulco do kernel')
 
 ## Teste de normalidade multivariada
 X = as.matrix(dados[,1:7])
@@ -95,11 +95,11 @@ mvShapiro.Test(X)
 ## p-valor = 4.996 x 10^-10  -  rejeita-se H0
 
 ## Teste de homocedasticidade
-## H0: as matrizes de covari‚ncias s„o homogÍneas
+## H0: as matrizes de covari√¢ncias s√£o homog√™neas
 boxM(dados[,1:7], dados$x8)
-## p-value = ~ 0: rejeita-se H0  -  deve-se avaliar a funÁ„o discriminante quadr·tica
+## p-value = ~ 0: rejeita-se H0  -  deve-se avaliar a fun√ß√£o discriminante quadr√°tica
 
-## Estimando as funÁıes discriminantes lineares
+## Estimando as fun√ß√µes discriminantes lineares
 X <- as.matrix(dados[, 1:7])
 head(X)
 
@@ -110,7 +110,7 @@ dadosLDA
 b <- predict(dadosLDA)
 b
 
-## Matriz de confus„o
+## Matriz de confus√£o
 mc = table(b$class,dados$x8)
 mc
 
@@ -123,8 +123,7 @@ TEA
 ##Probabilidade global de acerto
 (pAC_LDA = 1-TEA )
 
-
-## ValidaÁ„o cruzada
+## Valida√ß√£o cruzada
 dadosLDAcv <- lda(dados[, -8], dados$x8, CV = TRUE)
 
 mcCV = confusion(dadosLDAcv$class, dados$x8)
@@ -133,8 +132,7 @@ mcCV
 TEA_CV = attr(mcCV,"error")
 TEA_CV
 
-
-## Matriz de novas observaÁıes 
+## Matriz de novas observa√ß√µes 
 nX <- data.frame(x1 = c(14.33443,  18.33429,  11.87386,  13.45), 
                  x2 = c(14.29429,  16.13571,  13.24786,  14.09), 
                  x3 = c(0.8800700, 0.8835171, 0.8494086,  0.87), 
@@ -144,34 +142,34 @@ nX <- data.frame(x1 = c(14.33443,  18.33429,  11.87386,  13.45),
                  x7 = c(5.087214,  6.020600,  5.116400,  5.006))                                                            
 nX
 
-## Usando a funÁ„o predict() para classificar essas novas observaÁıes
+## Usando a fun√ß√£o predict() para classificar essas novas observa√ß√µes
 dados.pred = predict(dadosLDA, nX)
 dados.pred
 dados.pred$x
 
-## Alguns gr·ficos e interpretaÁ„o
-## Escores dos gr„os nas funÁıes discriminantes
+## Alguns gr√°ficos e interpreta√ß√£o
+## Escores dos gr√£os nas fun√ß√µes discriminantes
 x11()
 plot(dadosLDA, col = unclass(dados$x8),abbrev=TRUE)
 
-## Para verificar onde est„o localizados os novos indivÌduos graficamente
+## Para verificar onde est√£o localizados os novos indiv√≠duos graficamente
 points(dados.pred$x,pch=16,col="blue")
 
-## Verificar qual indivÌduo pertence a qual classe
+## Verificar qual indiv√≠duo pertence a qual classe
 plot(predict(dadosLDA)$x[, 1:2], type = "n")
 text(predict(dadosLDA)$x[, 1:2], rownames(dados), col = unclass(dados$x8))
 
-## verificar o posicionamento das medias
+## verificar o posicionamento das m√©dias
 plot(dadosLDA, dimen=1, type="both")
 
-## gr·fico que mostra a classificaÁ„o de cada indivÌduo para cada combinaÁ„o de duas vari·veis. Mostra 
-## tambÈm as fronteiras e a TEA em cada situaÁ„o
+## gr√°fico que mostra a classifica√ß√£o de cada indiv√≠duo para cada combina√ß√£o de duas vari√°veis. Mostra 
+## tamb√©m as fronteiras e a TEA em cada situa√ß√£o
 windows()
 partimat(dados$x8~.,data=dados,method="lda") 
 
 
 
-################################### FunÁ„o discriminante quadratica #######################################
+################################### Fun√ß√£o discriminante quadr√°tica #######################################
 
 dadosQDA <- qda(X, dados$x8)
 dadosQDA
@@ -180,7 +178,7 @@ dadosQDA
 b <- predict(dadosQDA)
 b
 
-## Matriz de confusao
+## Matriz de confus√£o
 mmc = confusion(b$class,dados$x8)
 mmc
 
@@ -191,7 +189,7 @@ TEA
 ##Probabilidade global de acerto
 (pAC_QDA = 1-TEA )
 
-## ValidaÁ„o cruzada
+## Valida√ß√£o cruzada
 dadosQDAcv <- qda(dados[, -8], dados$x8, CV = TRUE)
 
 mcCV = confusion(dadosQDAcv$class,dados$x8)
@@ -200,7 +198,7 @@ mcCV
 TEA_CV = attr(mcCV,"error")
 TEA_CV
 
-## Matriz de novas observaÁıes 
+## Matriz de novas observa√ß√µes 
 nX <- data.frame(x1 = c(14.33443,  18.33429,  11.87386,  13.45), 
                  x2 = c(14.29429,  16.13571,  13.24786,  14.09), 
                  x3 = c(0.8800700, 0.8835171, 0.8494086,  0.87), 
@@ -210,12 +208,12 @@ nX <- data.frame(x1 = c(14.33443,  18.33429,  11.87386,  13.45),
                  x7 = c(5.087214,  6.020600,  5.116400,  5.006))                                                              
 nX
 
-## Usando a funÁ„o predict() para classificar essas novas observaÁıes
+## Usando a fun√ß√£o predict() para classificar essas novas observa√ß√µes
 dados.pred = predict(dadosQDA, nX)
 dados.pred
 
-## Gr·fico que mostra a classificaÁ„o de cada indivÌduo para cada combinaÁ„o de duas variaveis. Mostra tambÈm as 
-## fronteiras e a TEA em cada situacao
+## Gr√°fico que mostra a classifica√ß√£o de cada indiv√≠duo para cada combina√ß√£o de duas variaveis. Mostra tamb√©m as 
+## fronteiras e a TEA em cada situa√ß√£o
 x11()
 partimat(dados$x8~.,data=dados,method="qda") 
 
