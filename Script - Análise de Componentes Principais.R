@@ -20,11 +20,10 @@ boxplot(X)
 library('car')
 windows()
 plot(pratos)
-scatterplotMatrix(X,diagonal = 'none')
+scatterplotMatrix(X, diagonal = 'none')
 cor(cbind(pratos))
 ## Podemos observar a presença de correlação e heterogeneidade de variâncias: a análise deve ser feita 
 ## com matriz de correlações
-
 
 ## Teste de espericidade de Bartlett
 ## H0: R = I (Não existe correlação suficiente para aplicação da técnica multivariada)
@@ -32,17 +31,16 @@ cor(cbind(pratos))
 library(psych)
 n = dim(X)[1]
 R = cor(X)
-cortest.bartlett(R,n)
+cortest.bartlett(R, n)
 ## significativo (p-valor ~= 0). Rejeita-se H0
 
-
 ## Análise de Componentes Principais utilizando a matriz de correlações (Mais aconselhável, neste caso)
-acp_R = princomp(X,cor = T)
+acp_R = princomp(X, cor = T)
 
 ## Verificando a quantidade de componentes que se deve reter na analise
 ## Gráfico screeplot 
 screeplot(acp_R, type="l")
-abline(h=1,col="red")
+abline(h=1, col="red")
 ## critério de Kaiser 
 (k = sum(eigen(R)$values>1))
 ## Pelo gráfico screeplot e pelo critério de Kaiser devemos reter apenas uma componente.
