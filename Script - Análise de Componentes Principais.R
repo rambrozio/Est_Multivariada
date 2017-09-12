@@ -9,7 +9,7 @@
 ##Obs: Cada Observação se refere a um prato avaliado em um festival gastronômico 
 
 ## Carregando o arquivo de dados
-(pratos = read.table("PratosSB.txt", header = TRUE, row.names = 1))
+(pratos = read.table("ACP_PratosSB.txt", header = TRUE, row.names = 1))
 (X = as.matrix(pratos))
 
 ## Análise exploratória
